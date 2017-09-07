@@ -17,7 +17,11 @@ if executable('fish_indent')
     setlocal formatexpr=fish#Format()
 endif
 
-if executable('fish')
+if !exists('g:fish_use_completion')
+    let g:fish_use_completion = 0 
+end
+
+if executable('fish') && g:fish_use_completion
     setlocal omnifunc=fish#Complete
     for s:path in split(system("fish -c 'echo $fish_function_path'"))
         execute 'setlocal path+='.s:path
